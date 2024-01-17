@@ -41,4 +41,26 @@ public class Service {
     public List<Passport> getPassportInformation(){
         return passportRepository.findAll();
     }
+
+    public void updatePassportNumber(int  passportId,String passportNumber){
+        passportRepository.updatePassportNumber(passportId,passportNumber);
+    }
+    public Person getPersonDataById(int id){
+        return personRepository.getPersonObject(id);
+    }
+    public void updatePassportCountry(int perId,String country){
+        Person p=personRepository.getPersonObject(perId);
+        Passport pass=p.getPassportRef();
+        pass.setPassportCountry(country);
+        personRepository.save(p);
+    }
+
+    public void deleteById(int id){
+        Person person=personRepository.getPersonObject(id);
+        if(person!=null) {
+            Passport passport = person.getPassportRef();
+            personRepository.delete(person);
+            passportRepository.delete(passport);
+        }
+    }
 }

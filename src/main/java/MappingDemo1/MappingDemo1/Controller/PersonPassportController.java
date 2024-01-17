@@ -6,10 +6,7 @@ import MappingDemo1.MappingDemo1.PayLoad.PersonPassport;
 import MappingDemo1.MappingDemo1.Service.Service;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +29,26 @@ public class PersonPassportController {
     @GetMapping("/getPassportInformation")
     public List<Passport> getPassportInformation(){
         return service.getPassportInformation();
+    }
+
+    @PutMapping("/updatePassportNumber")
+    public void updatePassportData(@RequestParam int pId,@RequestParam String pNumber){
+        service.updatePassportNumber(pId,pNumber);
+    }
+
+
+    @GetMapping("/getPersonObject/{id}")
+    public Person getPersonObject(@PathVariable int id){
+        return service.getPersonDataById(id);
+    }
+
+    @PutMapping("/updatePassportCountry/{perId}/{country}")
+    public void updatePassportCountry(@PathVariable int perId,@PathVariable String country){
+        service.updatePassportCountry(perId,country);
+    }
+
+    @DeleteMapping("/deleteById/{perId}")
+    public void deleteById(@PathVariable(name = "perId") int id){
+        service.deleteById(id);
     }
 }
